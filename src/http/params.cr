@@ -71,10 +71,19 @@ module HTTP
 
     # Creates an `HTTP::Params` instance from the key-value
     # pairs of the given *hash*.
-    def self.from_hash(hash : Hash)
+    def self.from(hash : Hash)
       build do |builder|
         hash.each do |key, value|
           builder.add key, value
+        end
+      end
+    end
+
+    # ditto
+    def self.from(named_tuple : NamedTuple)
+      build do |builder|
+        named_tuple.each do |key, value|
+          builder.add key.to_s, value
         end
       end
     end
